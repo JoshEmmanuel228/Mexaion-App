@@ -1,0 +1,2 @@
+ServidorWebPython/yolov8x-seg.pt filter=lfs diff=lfs merge=lfs -text
+yolov8x-seg.pt filter=lfs diff=lfs merge=lfs -text

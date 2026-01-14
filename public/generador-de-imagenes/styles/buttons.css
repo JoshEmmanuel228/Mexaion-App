@@ -1,0 +1,102 @@
+/* Style button specific styles */
+.style-button {
+    position: relative;
+    overflow: hidden;
+    padding: 1rem 0.5rem;
+    border-radius: 15px;
+    transition: all 0.5s ease;
+}
+
+.style-button::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(
+        from 0deg at 50% 50%,
+        rgba(255, 0, 0, 0.3) 0deg,
+        rgba(0, 255, 0, 0.3) 120deg,
+        rgba(255, 255, 255, 0.3) 240deg,
+        rgba(255, 0, 0, 0.3) 360deg
+    );
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    animation: rotate 10s linear infinite;
+    z-index: -1;
+}
+
+.style-button:hover::before {
+    opacity: 1;
+}
+
+.style-button.active::before {
+    opacity: 1;
+}
+
+.style-button span {
+    position: relative;
+    z-index: 1;
+}
+
+/* Estilos específicos para cada estilo */
+.style-button[data-style="realistic"] {
+    background: linear-gradient(45deg, #4a4a4a, #2a2a2a);
+}
+
+.style-button[data-style="cartoon"] {
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+}
+
+.style-button[data-style="anime"] {
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+}
+
+.style-button[data-style="sketch"] {
+    background: linear-gradient(45deg, #f39c12, #d35400);
+}
+
+.style-button[data-style="oil-painting"] {
+    background: linear-gradient(45deg, #3498db, #2980b9);
+}
+
+.style-button[data-style="watercolor"] {
+    background: linear-gradient(45deg, #9b59b6, #8e44ad);
+}
+
+.style-button[data-style="galactic"] {
+    background: linear-gradient(45deg, #1abc9c, #16a085);
+}
+
+.style-button[data-style="cyberpunk"] {
+    background: linear-gradient(45deg, #e67e22, #d35400);
+}
+
+.style-button[data-style="steampunk"] {
+    background: linear-gradient(45deg, #795548, #5D4037);
+}
+
+.style-button[data-style="vaporwave"] {
+    background: linear-gradient(45deg, #FF6AD5, #C774E8);
+}
+
+.style-button[data-style="pop-art"] {
+    background: linear-gradient(45deg, #FFEB3B, #FFC107);
+}
+
+.style-button[data-style="minimalist"] {
+    background: linear-gradient(45deg, #FFFFFF, #EEEEEE);
+    color: #000000;
+}
+
+/* Efecto de brillo para los botones de estilo */
+@keyframes glow {
+    0% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+    50% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.8); }
+    100% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); }
+}
+
+.style-button:hover, .style-button.active {
+    animation: glow 2s infinite;
+}

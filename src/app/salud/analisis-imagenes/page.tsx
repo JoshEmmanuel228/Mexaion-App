@@ -1,0 +1,1 @@
+export default function Page() { return <h1 className='text-4xl font-bold'>Análisis de Imágenes Médicas</h1>; }

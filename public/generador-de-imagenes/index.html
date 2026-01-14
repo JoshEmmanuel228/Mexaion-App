@@ -1,0 +1,109 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEXAion - Generador de Imágenes Galácticas</title>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/animations.css">
+    <link rel="stylesheet" href="styles/buttons.css">
+    <link rel="stylesheet" href="styles/modal.css">
+    <link rel="stylesheet" href="styles/contact.css">
+    <link rel="stylesheet" href="styles/text-animations.css">
+    <link href='https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap' rel='stylesheet'>
+    <link rel="stylesheet" href="https://kit.fontawesome.com/a076d05399.css">
+</head>
+<body>
+    <div class="container">
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="spiral"></div>
+        <div class="spiral"></div>
+        
+        <h1>MEXAion</h1>
+        
+        <div class="input-container">
+            <input type="text" id="prompt" placeholder="Describe tu imagen galáctica...">
+            
+            <div class="size-container">
+                <label>Tamaño:</label>
+                <div class="size-buttons">
+                    <div class="size-button active" data-size="small">Pequeño</div>
+                    <div class="size-button" data-size="medium">Mediano</div>
+                    <div class="size-button" data-size="large">Grande</div>
+                    <div class="size-button" data-size="custom">Personalizado</div>
+                </div>
+                <div class="custom-size" style="display:none;">
+                    <input type="number" id="width" min="100" max="4096" step="1" placeholder="Ancho (px)">
+                    <input type="number" id="height" min="100" max="4096" step="1" placeholder="Alto (px)">
+                </div>
+            </div>
+
+            <div class="resolution-container">
+                <label>Resolución:</label>
+                <div class="resolution-buttons">
+                    <div class="resolution-button active" data-resolution="1">Normal</div>
+                    <div class="resolution-button" data-resolution="2">HD</div>
+                    <div class="resolution-button" data-resolution="4">4K</div>
+                    <div class="resolution-button" data-resolution="8">8K</div>
+                </div>
+            </div>
+
+            <div class="style-container">
+                <label>Estilo:</label>
+                <div class="style-buttons">
+                    <div class="style-button active" data-style="realistic"><span>R</span><span>e</span><span>a</span><span>l</span><span>i</span><span>s</span><span>t</span><span>a</span></div>
+                    <div class="style-button" data-style="cartoon"><span>C</span><span>a</span><span>r</span><span>i</span><span>c</span><span>a</span><span>t</span><span>u</span><span>r</span><span>a</span></div>
+                    <div class="style-button" data-style="anime"><span>A</span><span>n</span><span>i</span><span>m</span><span>e</span></div>
+                    <div class="style-button" data-style="sketch"><span>B</span><span>o</span><span>c</span><span>e</span><span>t</span><span>o</span></div>
+                    <div class="style-button" data-style="oil-painting"><span>P</span><span>i</span><span>n</span><span>t</span><span>u</span><span>r</span><span>a</span><span> </span><span>a</span><span>l</span><span> </span><span>ó</span><span>l</span><span>e</span><span>o</span></div>
+                    <div class="style-button" data-style="watercolor"><span>A</span><span>c</span><span>u</span><span>a</span><span>r</span><span>e</span><span>l</span><span>a</span></div>
+                    <div class="style-button" data-style="galactic"><span>G</span><span>a</span><span>l</span><span>á</span><span>c</span><span>t</span><span>i</span><span>c</span><span>o</span></div>
+                    <div class="style-button" data-style="cyberpunk"><span>C</span><span>y</span><span>b</span><span>e</span><span>r</span><span>p</span><span>u</span><span>n</span><span>k</span></div>
+                    <div class="style-button" data-style="steampunk"><span>S</span><span>t</span><span>e</span><span>a</span><span>m</span><span>p</span><span>u</span><span>n</span><span>k</span></div>
+                    <div class="style-button" data-style="vaporwave"><span>V</span><span>a</span><span>p</span><span>o</span><span>r</span><span>w</span><span>a</span><span>v</span><span>e</span></div>
+                    <div class="style-button" data-style="pop-art"><span>P</span><span>o</span><span>p</span><span> </span><span>A</span><span>r</span><span>t</span></div>
+                    <div class="style-button" data-style="minimalist"><span>M</span><span>i</span><span>n</span><span>i</span><span>m</span><span>a</span><span>l</span><span>i</span><span>s</span><span>t</span><span>a</span></div>
+                </div>
+            </div>
+
+            <input type="number" id="alternatives" min="1" max="6" step="1" value="4" placeholder="Número de alternativas (1-6)">
+            <button class="generate-button" id="generateButton">Generar Imagen Galáctica</button>
+        </div>
+
+        <div id="preview"></div>
+
+        <footer>
+           AI MEXAion &copy; 2025 | Todos los derechos reservados | Creado por Joshua Emmanuel Meza Rodriguez
+        </footer>
+    </div>
+
+    <div class="contact-bubble">
+        <span style="font-size: 24px;">📧</span>
+        <div class="contact-info">
+            <p>📧 Correo: <a href="mailto:mezarodriguezjm@gmail.com">mezarodriguezjm@gmail.com</a></p>
+            <p>📱 Teléfono: <a href="tel:5620539637">5620539637</a></p>
+        </div>
+    </div>
+
+    <div id="imageModal" class="modal">
+        <span class="close">&times;</span>
+        <img class="modal-content" id="modalImage">
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        console.log('Inline script loaded');
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('DOM Content Loaded - Inline');
+        });
+    </script>
+    <script src="js/config.js"></script>
+    <script src="js/modal.js"></script>
+    <script src="js/contact.js"></script>
+    <script src="js/imageGenerator.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

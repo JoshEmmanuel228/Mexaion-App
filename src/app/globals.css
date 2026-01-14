@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+:root {
+  --background: linear-gradient(135deg, #0a0026 0%, #1a043a 100%);
+  --foreground: #e0e7ff;
+  --glass-bg: rgba(40, 20, 60, 0.55);
+  --glass-border: rgba(100, 200, 255, 0.25);
+  --neon-blue: #3cfaff;
+  --neon-pink: #ff3cff;
+  --neon-purple: #a259ff;
+  --star-glow: 0 0 8px #fff, 0 0 24px #3cfaff, 0 0 32px #a259ff;
+}
+
+.dark {
+  --background: linear-gradient(135deg, #0a0026 0%, #1a043a 100%);
+  --foreground: #e0e7ff;
+  --glass-bg: rgba(25, 29, 41, 0.7);
+  --glass-border: rgba(60, 255, 255, 0.2);
+  --neon-blue: #3cfaff;
+  --neon-pink: #ff3cff;
+  --neon-purple: #a259ff;
+  --star-glow: 0 0 8px #fff, 0 0 24px #3cfaff, 0 0 32px #a259ff;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-orbitron), sans-serif;
+  min-height: 100vh;
+  background-attachment: fixed;
+  background-size: cover;
+  /* fallback for browsers without QuantumBackground */
+}
+
+.glass-pane {
+  background: var(--glass-bg);
+  border: 1.5px solid var(--glass-border);
+  box-shadow: 0 4px 32px 0 rgba(60, 255, 255, 0.05);
+  backdrop-filter: blur(12px) saturate(160%);
+}
+
+/* Galactic Neon Buttons & Links */
+button, .btn, a, .neon {
+  transition: all 0.2s cubic-bezier(.4,0,.2,1);
+  border-radius: 0.5em;
+  box-shadow: 0 0 8px var(--neon-blue), 0 0 16px var(--neon-purple);
+  color: var(--neon-blue) !important;
+  border: 1.5px solid var(--neon-purple);
+  background: rgba(20,10,40,0.6);
+  text-shadow: 0 0 6px var(--neon-blue), 0 0 12px var(--neon-pink);
+}
+button:hover, .btn:hover, a:hover, .neon:hover {
+  color: var(--neon-pink) !important;
+  border-color: var(--neon-blue);
+  box-shadow: 0 0 12px var(--neon-pink), 0 0 24px var(--neon-blue);
+}
+
+/* Star glow for galactic effect */
+.galactic-star {
+  box-shadow: var(--star-glow);
+  border-radius: 50%;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background: #1a043a;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+  border-radius: 4px;
+}
+
+.glass-pane {
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--glass-border);
+  border-radius: 1rem;
+}
+
+.glass-pane button, .glass-pane a {
+  text-shadow: none !important;
+}

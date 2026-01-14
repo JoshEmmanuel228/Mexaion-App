@@ -1,0 +1,58 @@
+.contact-bubble {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #FF6B00;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    transition: all 0.3s ease;
+    z-index: 1000;
+}
+
+.contact-bubble:hover {
+    transform: scale(1.1);
+    background-color: #FF8533;
+}
+
+.contact-info {
+    position: absolute;
+    bottom: 70px;
+    right: 0;
+    background-color: white;
+    padding: 15px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    z-index: 999;
+    display: none;
+    min-width: 250px;
+    white-space: nowrap;
+}
+
+.contact-bubble:hover .contact-info {
+    display: block;
+}
+
+.contact-info p {
+    margin: 0;
+    color: #333;
+    line-height: 1.5;
+    font-size: 14px;
+    padding: 5px 0;
+}
+
+.contact-info a {
+    color: #FF6B00;
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.contact-info a:hover {
+    text-decoration: underline;
+    color: #FF8533;
+} 
