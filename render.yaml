@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: mexaion-app
+    env: docker
+    region: oregon
+    plan: free
+    branch: main
+    dockerContext: .
+    envVars:
+      - key: NODE_ENV
+        value: production
