@@ -29,7 +29,9 @@ export default function SchedulingForm() {
             });
 
             if (!response.ok) {
-                throw new Error('Error al enviar la solicitud.');
+                const errorData = await response.json();
+                console.error('Error detallado del servidor:', errorData);
+                throw new Error(errorData.error || 'Error al enviar la solicitud.');
             }
 
             setStatus('success');
@@ -41,9 +43,9 @@ export default function SchedulingForm() {
                 businessInfo: ''
             });
         } catch (error) {
-            console.error(error);
+            console.error('Error en el envío del formulario:', error);
             setStatus('error');
-            setErrorMessage('Hubo un problema al agendar. Por favor intenta de nuevo o contáctanos directamente.');
+            setErrorMessage(error instanceof Error ? error.message : 'Hubo un problema al agendar. Por favor intenta de nuevo o contáctanos directamente.');
         }
     };
 
@@ -164,8 +166,8 @@ export default function SchedulingForm() {
                     type="submit"
                     disabled={status === 'loading'}
                     className={`w-full py-4 px-6 rounded-lg font-bold text-lg text-black transition-all ${status === 'loading'
-                            ? 'bg-gray-500 cursor-not-allowed'
-                            : 'bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
+                        ? 'bg-gray-500 cursor-not-allowed'
+                        : 'bg-cyan-500 hover:bg-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.5)]'
                         }`}
                 >
                     {status === 'loading' ? 'Enviando...' : 'Confirmar Sesión Estratégica'}

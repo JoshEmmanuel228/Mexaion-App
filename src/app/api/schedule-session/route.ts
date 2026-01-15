@@ -10,7 +10,7 @@ export async function POST(request: Request) {
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
             console.error('Missing EMAIL_USER or EMAIL_PASS environment variables');
             return NextResponse.json(
-                { error: 'Server configuration error' },
+                { error: 'Error de configuración del servidor: Faltan variables de entorno de correo.' },
                 { status: 500 }
             );
         }
