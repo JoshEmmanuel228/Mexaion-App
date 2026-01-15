@@ -17,6 +17,8 @@ export async function POST(request: Request) {
 
     const resend = new Resend(process.env.RESEND_API_KEY);
 
+    const cleanPhone = phone.replace(/\D/g, ''); // Remove non-digits for WhatsApp link
+
     // 1. Email to Admin (YOU)
     // Note: 'onboarding@resend.dev' works for testing. 
     // Once you verify a domain (e.g., citas@mexaion.com), change 'from' field.
@@ -25,14 +27,35 @@ export async function POST(request: Request) {
       to: 'mexaion018@gmail.com',
       subject: `Nueva Solicitud: ${email} ${callNow ? '(URGENTE)' : ''}`,
       html: `
-        <div>
-            <h1>Nueva Solicitud de Cita</h1>
-            <p><strong>Cliente:</strong> ${email}</p>
-            <p><strong>Teléfono:</strong> ${phone}</p>
-            <p><strong>Fecha:</strong> ${new Date(sessionDate).toLocaleString()}</p>
-            <p><strong>Urgente (30 min):</strong> ${callNow ? 'SÍ' : 'No'}</p>
-            <hr />
-            <p><strong>Negocio:</strong> ${businessInfo}</p>
+        <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto;">
+            <h1 style="color: #06b6d4;">Nueva Solicitud de Cita</h1>
+            
+            <div style="background: #f4f4f5; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <p style="margin: 5px 0;"><strong>Cliente (Email):</strong> ${email}</p>
+                <p style="margin: 5px 0;"><strong>Teléfono:</strong> ${phone}</p>
+                <p style="margin: 5px 0;"><strong>Fecha Preferida:</strong> ${new Date(sessionDate).toLocaleString()}</p>
+                <p style="margin: 5px 0;"><strong>Urgencia (30 min):</strong> ${callNow ? '<span style="color: red; font-weight: bold;">SÍ URGE</span>' : 'No'}</p>
+            </div>
+
+            <h3>Acciones Rápidas:</h3>
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                <a href="https://wa.me/${cleanPhone}" style="background-color: #25D366; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    WhatsApp
+                </a>
+                <a href="tel:${phone}" style="background-color: #06b6d4; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    Llamar
+                </a>
+                <a href="mailto:${email}" style="background-color: #3b82f6; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; font-weight: bold;">
+                    Responder Correo
+                </a>
+            </div>
+
+            <hr style="margin: 20px 0; border: 0; border-top: 1px solid #e5e7eb;" />
+            
+            <h3>Información del Negocio:</h3>
+            <p style="background: #f9fafb; padding: 15px; border-radius: 8px; border: 1px solid #e5e7eb;">
+                ${businessInfo}
+            </p>
         </div>
             `
     });
