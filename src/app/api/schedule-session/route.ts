@@ -6,6 +6,8 @@ export async function POST(request: Request) {
         const data = await request.json();
         const { email, phone, callNow, sessionDate, businessInfo } = data;
 
+        console.log("Attempting to send email. Env check - User:", !!process.env.EMAIL_USER, "Pass:", !!process.env.EMAIL_PASS);
+
         // Validate environment variables
         if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
             console.error('Missing EMAIL_USER or EMAIL_PASS environment variables');
@@ -24,8 +26,8 @@ export async function POST(request: Request) {
             },
         });
 
-        // Email content
-        const mailOptions = {
+        // 1. Email to Admin
+        const adminMailOptions = {
             from: process.env.EMAIL_USER,
             to: 'mexaion018@gmail.com', // Admin email
             subject: `Nueva Solicitud de Sesión Estratégica${callNow ? ' - LLAMADA URGENTE (30 MIN)' : ''}`,
@@ -49,14 +51,39 @@ export async function POST(request: Request) {
       `,
         };
 
-        // Send email
-        await transporter.sendMail(mailOptions);
+        // 2. Email to Client (Confirmation)
+        const clientMailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email, // Client email
+            subject: 'Confirmación de Solicitud - MEXAion',
+            html: `
+        <div style="font-family: Arial, sans-serif; color: #333;">
+          <h2 style="color: #06b6d4;">¡Solicitud Recibida!</h2>
+          <p>Hola,</p>
+          <p>Hemos recibido tu solicitud para una sesión estratégica.</p>
+          <p>Nuestro equipo revisará tu información y te contactaremos pronto al número <strong>${phone}</strong>.</p>
+          
+          ${callNow ? '<p><strong>Nota:</strong> Has solicitado una llamada urgente en 30 minutos. Haremos lo posible por contactarte de inmediato.</p>' : ''}
+
+          <p>Detalles de tu cita solicitada: ${new Date(sessionDate).toLocaleString()}</p>
+          
+          <br>
+          <p>Atentamente,<br><strong>El equipo de MEXAion</strong></p>
+        </div>
+      `,
+        };
+
+        // Send emails in parallel
+        await Promise.all([
+            transporter.sendMail(adminMailOptions),
+            transporter.sendMail(clientMailOptions)
+        ]);
 
         return NextResponse.json({ success: true });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error sending email:', error);
         return NextResponse.json(
-            { error: 'Failed to send email' },
+            { error: `Error enviando correo: ${error.message || 'Error desconocido'}` },
             { status: 500 }
         );
     }
