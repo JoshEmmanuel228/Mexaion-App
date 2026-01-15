@@ -17,22 +17,18 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create transporter - Force IPv4 to avoid IPv6 timeouts in cloud envs
+    // Create transporter - Try Port 465 (SSL) as last resort for SMTP
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
-      port: 587,
-      secure: false, // true for 465, false for other ports
+      port: 465,
+      secure: true, // true for 465
       auth: {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
-      // Force IPv4 and increase timeout
-      tls: {
-        ciphers: 'SSLv3'
-      },
-      connectionTimeout: 10000, // 10 seconds
-      greetingTimeout: 5000,
-      socketTimeout: 10000,
+      connectionTimeout: 20000, // Increase to 20s
+      greetingTimeout: 10000,
+      socketTimeout: 20000,
     });
 
     // 1. Email to Admin
