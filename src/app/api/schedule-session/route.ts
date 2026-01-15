@@ -2,36 +2,38 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 
 export async function POST(request: Request) {
-    try {
-        const data = await request.json();
-        const { email, phone, callNow, sessionDate, businessInfo } = data;
+  try {
+    const data = await request.json();
+    const { email, phone, callNow, sessionDate, businessInfo } = data;
 
-        console.log("Attempting to send email. Env check - User:", !!process.env.EMAIL_USER, "Pass:", !!process.env.EMAIL_PASS);
+    console.log("Attempting to send email. Env check - User:", !!process.env.EMAIL_USER, "Pass:", !!process.env.EMAIL_PASS);
 
-        // Validate environment variables
-        if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
-            console.error('Missing EMAIL_USER or EMAIL_PASS environment variables');
-            return NextResponse.json(
-                { error: 'Error de configuración del servidor: Faltan variables de entorno de correo.' },
-                { status: 500 }
-            );
-        }
+    // Validate environment variables
+    if (!process.env.EMAIL_USER || !process.env.EMAIL_PASS) {
+      console.error('Missing EMAIL_USER or EMAIL_PASS environment variables');
+      return NextResponse.json(
+        { error: 'Error de configuración del servidor: Faltan variables de entorno de correo.' },
+        { status: 500 }
+      );
+    }
 
-        // Create transporter
-        const transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.EMAIL_USER,
-                pass: process.env.EMAIL_PASS,
-            },
-        });
+    // Create transporter - Using explicit port 587 to avoid timeouts
+    const transporter = nodemailer.createTransport({
+      host: 'smtp.gmail.com',
+      port: 587,
+      secure: false, // true for 465, false for other ports
+      auth: {
+        user: process.env.EMAIL_USER,
+        pass: process.env.EMAIL_PASS,
+      },
+    });
 
-        // 1. Email to Admin
-        const adminMailOptions = {
-            from: process.env.EMAIL_USER,
-            to: 'mexaion018@gmail.com', // Admin email
-            subject: `Nueva Solicitud de Sesión Estratégica${callNow ? ' - LLAMADA URGENTE (30 MIN)' : ''}`,
-            html: `
+    // 1. Email to Admin
+    const adminMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: 'mexaion018@gmail.com', // Admin email
+      subject: `Nueva Solicitud de Sesión Estratégica${callNow ? ' - LLAMADA URGENTE (30 MIN)' : ''}`,
+      html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #06b6d4;">Nueva Solicitud de Sesión Estratégica</h2>
           <p>Un cliente ha solicitado una sesión a través del sitio web.</p>
@@ -49,14 +51,14 @@ export async function POST(request: Request) {
           </p>
         </div>
       `,
-        };
+    };
 
-        // 2. Email to Client (Confirmation)
-        const clientMailOptions = {
-            from: process.env.EMAIL_USER,
-            to: email, // Client email
-            subject: 'Confirmación de Solicitud - MEXAion',
-            html: `
+    // 2. Email to Client (Confirmation)
+    const clientMailOptions = {
+      from: process.env.EMAIL_USER,
+      to: email, // Client email
+      subject: 'Confirmación de Solicitud - MEXAion',
+      html: `
         <div style="font-family: Arial, sans-serif; color: #333;">
           <h2 style="color: #06b6d4;">¡Solicitud Recibida!</h2>
           <p>Hola,</p>
@@ -71,20 +73,20 @@ export async function POST(request: Request) {
           <p>Atentamente,<br><strong>El equipo de MEXAion</strong></p>
         </div>
       `,
-        };
+    };
 
-        // Send emails in parallel
-        await Promise.all([
-            transporter.sendMail(adminMailOptions),
-            transporter.sendMail(clientMailOptions)
-        ]);
+    // Send emails in parallel
+    await Promise.all([
+      transporter.sendMail(adminMailOptions),
+      transporter.sendMail(clientMailOptions)
+    ]);
 
-        return NextResponse.json({ success: true });
-    } catch (error: any) {
-        console.error('Error sending email:', error);
-        return NextResponse.json(
-            { error: `Error enviando correo: ${error.message || 'Error desconocido'}` },
-            { status: 500 }
-        );
-    }
+    return NextResponse.json({ success: true });
+  } catch (error: any) {
+    console.error('Error sending email:', error);
+    return NextResponse.json(
+      { error: `Error enviando correo: ${error.message || 'Error desconocido'}` },
+      { status: 500 }
+    );
+  }
 }
