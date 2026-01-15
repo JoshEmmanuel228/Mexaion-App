@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import ContactButtons from '@/components/ContactButtons';
 
 // --- Icon Components ---
 const IconWrapper = ({ className, children }: { className: string, children: React.ReactNode }) => (
@@ -13,24 +14,24 @@ const GitHubIcon = () => (
 );
 
 const PhoneIcon = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 mr-2"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" className="w-6 h-6 mr-2"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
 );
 
 
 // --- Timeline Components ---
 const TimelineEvent = ({ title, skills, icon, color, isLast = false }: { title: string, skills: string[], icon: React.ReactNode, color: string, isLast?: boolean }) => (
-    <div className="mb-12 pl-20 relative">
-        <div className="absolute w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center text-cyan-300 font-bold text-lg border-2 border-cyan-700 left-0">
-            {icon}
-        </div>
-        {!isLast && <div className={`border-l-4 ${color}/50 absolute h-full left-8 top-16`}></div>}
-        <div className="glass-pane p-6 rounded-lg">
-            <h4 className={`text-2xl font-bold ${color} mb-4`}>{title}</h4>
-            <ul className="list-disc list-inside text-blue-200/80 space-y-2">
-                {skills.map(skill => <li key={skill}>{skill}</li>)}
-            </ul>
-        </div>
+  <div className="mb-12 pl-20 relative">
+    <div className="absolute w-16 h-16 bg-gray-900 rounded-full flex items-center justify-center text-cyan-300 font-bold text-lg border-2 border-cyan-700 left-0">
+      {icon}
     </div>
+    {!isLast && <div className={`border-l-4 ${color}/50 absolute h-full left-8 top-16`}></div>}
+    <div className="glass-pane p-6 rounded-lg">
+      <h4 className={`text-2xl font-bold ${color} mb-4`}>{title}</h4>
+      <ul className="list-disc list-inside text-blue-200/80 space-y-2">
+        {skills.map(skill => <li key={skill}>{skill}</li>)}
+      </ul>
+    </div>
+  </div>
 );
 
 
@@ -109,37 +110,35 @@ export default function SobreMiPage() {
 
       <div className="glass-pane rounded-lg p-8 md:p-12 mb-16">
         <div className="text-center">
-            <h2 className="text-4xl font-bold text-white">Joshua Emmanuel Meza Rodriguez</h2>
-            <p className="text-cyan-400 text-2xl">Ingeniero en Inteligencia Artificial del Instituto Politécnico Nacional</p>
+          <h2 className="text-4xl font-bold text-white">Joshua Emmanuel Meza Rodriguez</h2>
+          <p className="text-cyan-400 text-2xl">Ingeniero en Inteligencia Artificial del Instituto Politécnico Nacional</p>
         </div>
       </div>
 
       <main className="relative">
         <div className="border-l-4 border-cyan-700/30 absolute h-full left-8 top-0 hidden md:block"></div>
         {skillCategories.map((cat, index) => (
-            <TimelineEvent 
-                key={cat.category}
-                title={cat.category}
-                skills={cat.skills}
-                icon={cat.icon}
-                color={cat.color}
-                isLast={index === skillCategories.length - 1}
-            />
+          <TimelineEvent
+            key={cat.category}
+            title={cat.category}
+            skills={cat.skills}
+            icon={cat.icon}
+            color={cat.color}
+            isLast={index === skillCategories.length - 1}
+          />
         ))}
       </main>
 
       <footer className="glass-pane rounded-lg p-8 mt-16">
         <h3 className="text-3xl font-bold text-center text-white mb-8">Conecta con el Futuro</h3>
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8">
-            <div className="flex items-center text-lg text-gray-300">
-                <PhoneIcon />
-                <span>5620539637</span>
-            </div>
-            <Link href="https://github.com/JoshEmmanuel228" target="_blank" rel="noopener noreferrer" 
-                    className="inline-flex items-center justify-center px-8 py-4 border-2 border-cyan-500 text-cyan-300 font-bold rounded-lg hover:bg-cyan-500/20 transition-all duration-300 transform hover:scale-105">
-                <GitHubIcon />
-                Ver Perfil en GitHub
-            </Link>
+        <div className="flex flex-col items-center gap-8">
+          <ContactButtons />
+
+          <Link href="https://github.com/JoshEmmanuel228" target="_blank" rel="noopener noreferrer"
+            className="inline-flex items-center justify-center px-8 py-4 border-2 border-cyan-500 text-cyan-300 font-bold rounded-lg hover:bg-cyan-500/20 transition-all duration-300 transform hover:scale-105">
+            <GitHubIcon />
+            Ver Perfil en GitHub
+          </Link>
         </div>
       </footer>
     </div>
