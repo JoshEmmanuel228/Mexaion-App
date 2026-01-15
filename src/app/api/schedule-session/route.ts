@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create transporter - Using explicit port 587 to avoid timeouts
+    // Create transporter - Force IPv4 to avoid IPv6 timeouts in cloud envs
     const transporter = nodemailer.createTransport({
       host: 'smtp.gmail.com',
       port: 587,
@@ -26,6 +26,13 @@ export async function POST(request: Request) {
         user: process.env.EMAIL_USER,
         pass: process.env.EMAIL_PASS,
       },
+      // Force IPv4 and increase timeout
+      tls: {
+        ciphers: 'SSLv3'
+      },
+      connectionTimeout: 10000, // 10 seconds
+      greetingTimeout: 5000,
+      socketTimeout: 10000,
     });
 
     // 1. Email to Admin
