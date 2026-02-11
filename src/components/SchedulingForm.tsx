@@ -91,6 +91,8 @@ export default function SchedulingForm() {
                     <div className="space-y-2">
                         <label className="text-blue-200 font-semibold block">Correo Electrónico</label>
                         <input
+                            suppressHydrationWarning
+
                             type="email"
                             name="email"
                             required
@@ -104,6 +106,8 @@ export default function SchedulingForm() {
                     <div className="space-y-2">
                         <label className="text-blue-200 font-semibold block">Número de Teléfono</label>
                         <input
+                            suppressHydrationWarning
+
                             type="tel"
                             name="phone"
                             required
@@ -118,6 +122,7 @@ export default function SchedulingForm() {
                 <div className="space-y-2">
                     <label className="text-blue-200 font-semibold block">Fecha y Hora Preferida</label>
                     <input
+                        suppressHydrationWarning
                         type="datetime-local"
                         name="sessionDate"
                         required
@@ -130,6 +135,8 @@ export default function SchedulingForm() {
                 <div className="space-y-2">
                     <label className="text-blue-200 font-semibold block">Sobre tu Empresa / Negocio</label>
                     <textarea
+                        suppressHydrationWarning
+
                         name="businessInfo"
                         required
                         value={formData.businessInfo}
@@ -142,6 +149,8 @@ export default function SchedulingForm() {
 
                 <div className="flex items-center space-x-3 bg-cyan-900/20 p-4 rounded-lg border border-cyan-900/50">
                     <input
+                        suppressHydrationWarning
+
                         type="checkbox"
                         name="callNow"
                         id="callNow"
@@ -161,6 +170,8 @@ export default function SchedulingForm() {
                 )}
 
                 <motion.button
+                    suppressHydrationWarning
+
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     type="submit"
